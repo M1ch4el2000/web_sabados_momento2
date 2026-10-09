@@ -21,10 +21,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!submitBtn) {
         submitBtn = document.createElement("button");
         submitBtn.type = "submit";
-        submitBtn.textContent = "Enviar Solicitud UNSC";
+        submitBtn.textContent = "Enviar";
         submitBtn.style.gridColumn = "1 / -1";
         submitBtn.style.padding = "0.9rem";
-        submitBtn.style.backgroundColor = "var(--accent-green)";
         submitBtn.style.color = "var(--text-main)";
         submitBtn.style.border = "1px solid var(--highlight)";
         submitBtn.style.cursor = "pointer";
@@ -70,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         } else {
             let razones = [];
-            if (!cumpleEdad) razones.puch ? null : razones.push("La edad mínima requerida es 18 años.");
+            if (!cumpleEdad) razones.push ? null : razones.push("La edad mínima requerida es 18 años.");
             else if (!cumpleEdad) razones.push("Edad insuficiente.");
             if (!cumpleAltura) razones.push("La altura mínima requerida es de 155 cm.");
             if (!pesoAdecuado) razones.push("Su índice de masa corporal indica que se encuentra fuera del rango de peso adecuado (bajo o sobrepeso).");

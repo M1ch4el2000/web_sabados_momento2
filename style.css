@@ -96,7 +96,7 @@ nav {
     transition: all 0.3s ease;
 }
 
-.unsc_content button:hover , nav button:hover {
+form button:hover , nav button:hover {
     background-color: var(--accent-green);
     border-color: var(--highlight);
     box-shadow: 0 0 10px rgba(112, 162, 94, 0.3);
