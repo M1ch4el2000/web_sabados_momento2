@@ -1,0 +1,220 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+p,
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+label,
+input {
+    text-decoration: none;
+    font-family: monospace;
+}
+
+:root {
+    --bg-dark: #0f1410;
+    --bg-card: #161f18;
+    --accent-green: #3b5332;
+    --accent-glow: #4e733f;
+    --text-main: #d1d8cd;
+    --text-muted: #8c9a86;
+    --border-color: #273822;
+    --highlight: #70a25e;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    line-height: 1.6;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 900px;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 1.5rem;
+}
+
+#recruit_head1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+h1 {
+    font-size: 2rem;
+    letter-spacing: 2px;
+    color: var(--highlight);
+    text-transform: uppercase;
+}
+
+header img,
+footer img {
+    max-height: 200px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 8px rgba(78, 115, 63, 0.4));
+}
+
+nav {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+.unsc_content button, nav button {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.unsc_content button:hover , nav button:hover {
+    background-color: var(--accent-green);
+    border-color: var(--highlight);
+    box-shadow: 0 0 10px rgba(112, 162, 94, 0.3);
+}
+
+header>img[alt*="UNSC recruitment image"] {
+    width: 100%;
+    max-height: 350px;
+    object-fit: fill;
+    border: 1px solid var(--border-color);
+    margin-top: 1rem;
+}
+
+.unsc_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+article.unsc_content {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+}
+
+article p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+form {
+    margin-bottom: 50px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1.2rem 2rem;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 2.5rem;
+    width: 100%;
+    border-radius: 6px;
+    text-align: left;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+form label {
+    font-weight: 600;
+    color: var(--highlight);
+    letter-spacing: 1px;
+}
+
+form input,
+form select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background-color: #0b100c;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-size: 1rem;
+    border-radius: 4px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input:focus,
+form select:focus {
+    outline: none;
+    border-color: var(--highlight);
+    box-shadow: 0 0 8px rgba(112, 162, 94, 0.4);
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 800px;
+    border-top: 2px solid var(--border-color);
+    padding-top: 2rem;
+    text-align: center;
+}
+
+footer section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+footer a {
+    color: var(--highlight);
+    text-decoration: none;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+}
+
+footer a:hover {
+    color: #fff;
+    text-shadow: 0 0 6px var(--highlight);
+}
+
+footer p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 600px) {
+    form {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        padding: 1.5rem;
+    }
+}
