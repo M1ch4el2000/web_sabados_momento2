@@ -175,7 +175,8 @@ form select:focus {
 
 footer {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     gap: 1.5rem;
     width: 100%;
