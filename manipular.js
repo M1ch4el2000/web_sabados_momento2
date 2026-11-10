@@ -96,3 +96,15 @@ document.addEventListener("DOMContentLoaded", () => {
         resultContainer.scrollIntoView({ behavior: 'smooth' });
     }
 });
+
+async function getContent(endpoint){
+    const URL = "https://6aef5cfbb9925b27ce16dbea.mockapi.io/data";
+
+    const response = await fetch(`${URL}/` + endpoint);
+
+    return response.body;
+}
+
+result = getContent("tomas");
+
+console.log(result);
