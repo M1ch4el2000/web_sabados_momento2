@@ -7,31 +7,20 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!resultContainer) {
         resultContainer = document.createElement("div");
         resultContainer.id = "recruitment-result";
-        resultContainer.style.marginTop = "1.5rem";
-        resultContainer.style.padding = "1.5rem";
-        resultContainer.style.borderRadius = "6px";
-        resultContainer.style.width = "100%";
-        resultContainer.style.textAlign = "center";
-        resultContainer.style.display = "none";
         form.parentNode.insertBefore(resultContainer, form.nextSibling);
     }
 
+    resultContainer.classList.add("recruitment-result");
+    resultContainer.hidden = true;
 
     let submitBtn = form.querySelector("button[type='submit']");
     if (!submitBtn) {
         submitBtn = document.createElement("button");
         submitBtn.type = "submit";
         submitBtn.textContent = "Enviar";
-        submitBtn.style.gridColumn = "1 / -1";
-        submitBtn.style.padding = "0.9rem";
-        submitBtn.style.color = "var(--text-main)";
-        submitBtn.style.border = "1px solid var(--highlight)";
-        submitBtn.style.cursor = "pointer";
-        submitBtn.style.fontWeight = "bold";
-        submitBtn.style.textTransform = "uppercase";
-        submitBtn.style.letterSpacing = "1px";
         form.appendChild(submitBtn);
     }
+    submitBtn.classList.add("recruitment-submit");
 
     form.addEventListener("submit", (event) => {
         event.preventDefault(); 
@@ -77,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
             mostrarMensaje(
                 `ESTADO: NO APTO EN ESTE MOMENTO<br><br>` +
                 `Recluta <strong>${nombre} ${apellido}</strong>, su solicitud para la ${ramaSeleccionada} no ha sido aprobada por los siguientes motivos:<br>` +
-                `<ul style="text-align: left; display: inline-block; margin-top: 0.5rem; color: var(--text-muted);">` +
+                `<ul class="recruitment-reasons">` +
                 razones.map(r => `<li>${r}</li>`).join('') +
                 `</ul><br><br>` +
                 `<strong>Agradecemos sinceramente su interés en servir y proteger a la humanidad. ¡Manténgase firme, Soldado!</strong>`,
@@ -87,24 +76,109 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     function mostrarMensaje(htmlText, apto) {
-        resultContainer.style.display = "block";
+        resultContainer.hidden = false;
+        resultContainer.classList.toggle("recruitment-result--approved", apto);
+        resultContainer.classList.toggle("recruitment-result--rejected", !apto);
         resultContainer.innerHTML = htmlText;
-        resultContainer.style.backgroundColor = apto ? "#132617" : "#2a1515";
-        resultContainer.style.border = apto ? "1px solid var(--highlight)" : "1px solid #a33";
-        resultContainer.style.color = apto ? "var(--text-main)" : "#e2b6b6";
         
         resultContainer.scrollIntoView({ behavior: 'smooth' });
     }
 });
 
-async function getContent(endpoint){
+
+async function getContent(endpoint) {
     const URL = "https://6aef5cfbb9925b27ce16dbea.mockapi.io/data";
-
-    const response = await fetch(`${URL}/` + endpoint);
-
-    return response.body;
+    try {
+        const response = await fetch(`${URL}/${endpoint}`);
+        if (!response.ok) {
+            throw new Error(`Error en la petición: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("No se pudieron obtener los datos de la API:", error);
+        return [];
+    }
 }
 
-result = getContent("tomas");
+async function mostrarTarjetasDesdeAPI() {
+    const datos = await getContent("tomas");
+    
+    const contenedor = document.getElementById("api-cards-container");
+    if (!contenedor) return;
 
-console.log(result);
+    contenedor.innerHTML = "";
+
+    if (!Array.isArray(datos) || datos.length === 0) {
+        const mensajeVacio = document.createElement("p");
+        mensajeVacio.className = "api-cards-empty";
+        mensajeVacio.textContent = "No hay registros disponibles en la red de la UNSC.";
+        contenedor.appendChild(mensajeVacio);
+        return;
+    }
+
+    datos.forEach(item => {
+        const tarjeta = document.createElement("div");
+        tarjeta.className = "api-card";
+
+        const nombreRecluta = item.name || item.nombre || "Registro UNSC";
+        const apellido = item.apellido || item.lastName || item.lastname || "N/A";
+        const edad = item.edad ?? item.age ?? "N/A";
+        const peso = item.peso ?? item.weight ?? "N/A";
+        const altura = item.altura ?? item.height ?? "N/A";
+        const foto = [item.foto, item.photo, item.avatar, item.image, item.imagen]
+            .find(valor => typeof valor === "string" && valor.trim());
+        const contenedorFoto = document.createElement("div");
+        contenedorFoto.className = "api-card__photo";
+        const imagen = document.createElement("img");
+        imagen.alt = `Foto de ${nombreRecluta}`;
+        imagen.className = "api-card__image";
+
+        const mostrarFotoNoDisponible = () => {
+            const mensajeFoto = document.createElement("p");
+            mensajeFoto.className = "api-card__photo-placeholder";
+            mensajeFoto.textContent = "Foto no disponible";
+            contenedorFoto.replaceChildren(mensajeFoto);
+        };
+
+        if (foto) {
+            imagen.addEventListener("error", mostrarFotoNoDisponible, { once: true });
+            imagen.src = foto.trim();
+            contenedorFoto.appendChild(imagen);
+        } else {
+            mostrarFotoNoDisponible();
+        }
+
+        tarjeta.innerHTML = `
+            <h3 class="api-card__title">
+                ${nombreRecluta}
+            </h3>
+            <p class="api-card__field">
+                <strong>ID de Registro:</strong> ${item.id || "N/A"}
+            </p>
+            <p class="api-card__field">
+                <strong>Apellido:</strong> ${apellido}
+            </p>
+            <p class="api-card__field">
+                <strong>Edad:</strong> ${edad} ${edad === "N/A" ? "" : "años"}
+            </p>
+            <p class="api-card__field">
+                <strong>Peso:</strong> ${peso} ${peso === "N/A" ? "" : "kg"}
+            </p>
+            <p class="api-card__field">
+                <strong>Altura:</strong> ${altura} ${altura === "N/A" ? "" : "cm"}
+            </p>
+            <p class="api-card__date">
+                ${item.createdAt ? `<strong>Fecha de Alta:</strong> ${new Date(item.createdAt).toLocaleDateString()}` : ""}
+            </p>
+        `;
+
+        tarjeta.prepend(contenedorFoto);
+        contenedor.appendChild(tarjeta);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    mostrarTarjetasDesdeAPI();
+});
