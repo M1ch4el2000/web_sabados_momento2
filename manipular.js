@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let resultContainer = document.getElementById("recruitment-result");
     if (!resultContainer) {
-        resultContainer = document.createElement("div");
-        resultContainer.id = "recruitment-result";
+        const resultTemplate = document.getElementById("recruitment-result-template");
+        resultContainer = resultTemplate.content.firstElementChild.cloneNode(true);
         form.parentNode.insertBefore(resultContainer, form.nextSibling);
     }
 
@@ -15,9 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let submitBtn = form.querySelector("button[type='submit']");
     if (!submitBtn) {
-        submitBtn = document.createElement("button");
-        submitBtn.type = "submit";
-        submitBtn.textContent = "Enviar";
+        const submitTemplate = document.getElementById("recruitment-submit-template");
+        submitBtn = submitTemplate.content.firstElementChild.cloneNode(true);
         form.appendChild(submitBtn);
     }
     submitBtn.classList.add("recruitment-submit");
@@ -34,10 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const ramaSeleccionada = selectRama ? selectRama.value : "";
 
         if (isNaN(edad) || isNaN(peso) || isNaN(altura) || !id || !nombre || !apellido) {
-            mostrarMensaje(
-                "ADVERTENCIA DE LA UNSC: Por favor, complete todos los campos correctamente con valores numéricos válidos.",
-                false
-            );
+            mostrarMensaje("invalid");
             return;
         }
 
@@ -49,38 +45,45 @@ document.addEventListener("DOMContentLoaded", () => {
         const esApto = cumpleEdad && cumpleAltura && pesoAdecuado;
 
         if (esApto) {
-            mostrarMensaje(
-                `¡ESTADO: APTO PARA SERVIR!<br><br>` +
-                `Recluta <strong>${nombre} ${apellido}</strong> (${id}), seleccionado para: <em>${ramaSeleccionada}</em>.<br>` +
-                `Usted cumple con los estándares físicos y de edad requeridos por el Mando Espacial.<br>` +
-                `<strong>Debe presentarse en la oficina de reclutamiento de la UNSC más cercana que tenga para seguir el proceso.</strong>`,
-                true
-            );
+            mostrarMensaje("approved", { nombre, apellido, id, rama: ramaSeleccionada });
         } else {
             let razones = [];
-            if (!cumpleEdad) razones.push ? null : razones.push("La edad mínima requerida es 18 años.");
-            else if (!cumpleEdad) razones.push("Edad insuficiente.");
+            if (!cumpleEdad) razones.push("La edad mínima requerida es 18 años.");
             if (!cumpleAltura) razones.push("La altura mínima requerida es de 155 cm.");
             if (!pesoAdecuado) razones.push("Su índice de masa corporal indica que se encuentra fuera del rango de peso adecuado (bajo o sobrepeso).");
 
-            mostrarMensaje(
-                `ESTADO: NO APTO EN ESTE MOMENTO<br><br>` +
-                `Recluta <strong>${nombre} ${apellido}</strong>, su solicitud para la ${ramaSeleccionada} no ha sido aprobada por los siguientes motivos:<br>` +
-                `<ul class="recruitment-reasons">` +
-                razones.map(r => `<li>${r}</li>`).join('') +
-                `</ul><br><br>` +
-                `<strong>Agradecemos sinceramente su interés en servir y proteger a la humanidad. ¡Manténgase firme, Soldado!</strong>`,
-                false
-            );
+            mostrarMensaje("rejected", { nombre, apellido, rama: ramaSeleccionada, razones });
         }
     });
 
-    function mostrarMensaje(htmlText, apto) {
+    function mostrarMensaje(tipo, datos = {}) {
         resultContainer.hidden = false;
-        resultContainer.classList.toggle("recruitment-result--approved", apto);
-        resultContainer.classList.toggle("recruitment-result--rejected", !apto);
-        resultContainer.innerHTML = htmlText;
-        
+        resultContainer.classList.toggle("recruitment-result--approved", tipo === "approved");
+        resultContainer.classList.toggle("recruitment-result--rejected", tipo !== "approved");
+
+        resultContainer.querySelectorAll("[data-result]").forEach(section => {
+            section.hidden = section.dataset.result !== tipo;
+        });
+
+        resultContainer.querySelectorAll("[data-candidate-name]").forEach(element => {
+            element.textContent = `${datos.nombre} ${datos.apellido}`;
+        });
+        const candidateId = resultContainer.querySelector("[data-candidate-id]");
+        if (candidateId) candidateId.textContent = datos.id;
+        const branch = resultContainer.querySelector("[data-branch]");
+        if (branch) branch.textContent = datos.rama;
+
+        const reasonsList = resultContainer.querySelector("[data-reasons]");
+        if (reasonsList) {
+            const reasonTemplate = document.getElementById("recruitment-reason-template");
+            reasonsList.replaceChildren();
+            (datos.razones || []).forEach(reason => {
+                const listItem = reasonTemplate.content.firstElementChild.cloneNode(true);
+                listItem.textContent = reason;
+                reasonsList.appendChild(listItem);
+            });
+        }
+
         resultContainer.scrollIntoView({ behavior: 'smooth' });
     }
 });
@@ -107,19 +110,17 @@ async function mostrarTarjetasDesdeAPI() {
     const contenedor = document.getElementById("api-cards-container");
     if (!contenedor) return;
 
-    contenedor.innerHTML = "";
-
     if (!Array.isArray(datos) || datos.length === 0) {
-        const mensajeVacio = document.createElement("p");
-        mensajeVacio.className = "api-cards-empty";
-        mensajeVacio.textContent = "No hay registros disponibles en la red de la UNSC.";
-        contenedor.appendChild(mensajeVacio);
+        const emptyTemplate = document.getElementById("api-cards-empty-template");
+        contenedor.replaceChildren(emptyTemplate.content.cloneNode(true));
         return;
     }
 
+    const cardTemplate = document.getElementById("api-card-template");
+    contenedor.replaceChildren();
+
     datos.forEach(item => {
-        const tarjeta = document.createElement("div");
-        tarjeta.className = "api-card";
+        const tarjeta = cardTemplate.content.firstElementChild.cloneNode(true);
 
         const nombreRecluta = item.name || item.nombre || "Registro UNSC";
         const apellido = item.apellido || item.lastName || item.lastname || "N/A";
@@ -128,52 +129,37 @@ async function mostrarTarjetasDesdeAPI() {
         const altura = item.altura ?? item.height ?? "N/A";
         const foto = [item.foto, item.photo, item.avatar, item.image, item.imagen]
             .find(valor => typeof valor === "string" && valor.trim());
-        const contenedorFoto = document.createElement("div");
-        contenedorFoto.className = "api-card__photo";
-        const imagen = document.createElement("img");
+        const imagen = tarjeta.querySelector('[data-card-field="photo"]');
+        const mensajeFoto = tarjeta.querySelector('[data-card-field="photo-placeholder"]');
         imagen.alt = `Foto de ${nombreRecluta}`;
-        imagen.className = "api-card__image";
-
-        const mostrarFotoNoDisponible = () => {
-            const mensajeFoto = document.createElement("p");
-            mensajeFoto.className = "api-card__photo-placeholder";
-            mensajeFoto.textContent = "Foto no disponible";
-            contenedorFoto.replaceChildren(mensajeFoto);
-        };
 
         if (foto) {
-            imagen.addEventListener("error", mostrarFotoNoDisponible, { once: true });
+            imagen.addEventListener("error", () => {
+                imagen.hidden = true;
+                mensajeFoto.hidden = false;
+            }, { once: true });
             imagen.src = foto.trim();
-            contenedorFoto.appendChild(imagen);
+            imagen.hidden = false;
         } else {
-            mostrarFotoNoDisponible();
+            mensajeFoto.hidden = false;
         }
 
-        tarjeta.innerHTML = `
-            <h3 class="api-card__title">
-                ${nombreRecluta}
-            </h3>
-            <p class="api-card__field">
-                <strong>ID de Registro:</strong> ${item.id || "N/A"}
-            </p>
-            <p class="api-card__field">
-                <strong>Apellido:</strong> ${apellido}
-            </p>
-            <p class="api-card__field">
-                <strong>Edad:</strong> ${edad} ${edad === "N/A" ? "" : "años"}
-            </p>
-            <p class="api-card__field">
-                <strong>Peso:</strong> ${peso} ${peso === "N/A" ? "" : "kg"}
-            </p>
-            <p class="api-card__field">
-                <strong>Altura:</strong> ${altura} ${altura === "N/A" ? "" : "cm"}
-            </p>
-            <p class="api-card__date">
-                ${item.createdAt ? `<strong>Fecha de Alta:</strong> ${new Date(item.createdAt).toLocaleDateString()}` : ""}
-            </p>
-        `;
+        tarjeta.querySelector('[data-card-field="name"]').textContent = nombreRecluta;
+        tarjeta.querySelector('[data-card-field="id"]').textContent = item.id ?? "N/A";
+        tarjeta.querySelector('[data-card-field="surname"]').textContent = apellido;
+        tarjeta.querySelector('[data-card-field="age"]').textContent =
+            edad === "N/A" ? edad : `${edad} años`;
+        tarjeta.querySelector('[data-card-field="weight"]').textContent =
+            peso === "N/A" ? peso : `${peso} kg`;
+        tarjeta.querySelector('[data-card-field="height"]').textContent =
+            altura === "N/A" ? altura : `${altura} cm`;
 
-        tarjeta.prepend(contenedorFoto);
+        if (item.createdAt) {
+            tarjeta.querySelector('[data-card-field="created-at"]').textContent =
+                new Date(item.createdAt).toLocaleDateString();
+            tarjeta.querySelector('[data-card-field="created-at-container"]').hidden = false;
+        }
+
         contenedor.appendChild(tarjeta);
     });
 }

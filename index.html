@@ -49,6 +49,65 @@
         </section>
     </footer>
 
+    <template id="recruitment-submit-template">
+        <button class="recruitment-submit" type="submit">Enviar</button>
+    </template>
+
+    <template id="recruitment-result-template">
+        <div id="recruitment-result" class="recruitment-result" hidden>
+            <section data-result="approved" hidden>
+                <h2>¡ESTADO: APTO PARA SERVIR!</h2>
+                <p>
+                    Recluta <strong data-candidate-name></strong>
+                    (<span data-candidate-id></span>), seleccionado para:
+                    <em data-branch></em>.
+                </p>
+                <p>Usted cumple con los estándares físicos y de edad requeridos por el Mando Espacial.</p>
+                <p><strong>Debe presentarse en la oficina de reclutamiento de la UNSC más cercana que tenga para seguir el proceso.</strong></p>
+            </section>
+            <section data-result="rejected" hidden>
+                <h2>ESTADO: NO APTO EN ESTE MOMENTO</h2>
+                <p>
+                    Recluta <strong data-candidate-name></strong>, su solicitud para la
+                    <em data-branch></em> no ha sido aprobada por los siguientes motivos:
+                </p>
+                <ul class="recruitment-reasons" data-reasons></ul>
+                <p><strong>Agradecemos sinceramente su interés en servir y proteger a la humanidad. ¡Manténgase firme, Soldado!</strong></p>
+            </section>
+            <p data-result="invalid" hidden>
+                ADVERTENCIA DE LA UNSC: Por favor, complete todos los campos correctamente con valores numéricos válidos.
+            </p>
+        </div>
+    </template>
+
+    <template id="recruitment-reason-template">
+        <li data-reason></li>
+    </template>
+
+    <template id="api-cards-empty-template">
+        <p class="api-cards-empty">No hay registros disponibles en la red de la UNSC.</p>
+    </template>
+
+    <template id="api-card-template">
+        <article class="api-card">
+            <div class="api-card__photo">
+                <img class="api-card__image" data-card-field="photo" alt="" hidden>
+                <p class="api-card__photo-placeholder" data-card-field="photo-placeholder" hidden>
+                    Foto no disponible
+                </p>
+            </div>
+            <h3 class="api-card__title" data-card-field="name"></h3>
+            <p class="api-card__field"><strong>ID de Registro:</strong> <span data-card-field="id"></span></p>
+            <p class="api-card__field"><strong>Apellido:</strong> <span data-card-field="surname"></span></p>
+            <p class="api-card__field"><strong>Edad:</strong> <span data-card-field="age"></span></p>
+            <p class="api-card__field"><strong>Peso:</strong> <span data-card-field="weight"></span></p>
+            <p class="api-card__field"><strong>Altura:</strong> <span data-card-field="height"></span></p>
+            <p class="api-card__date" data-card-field="created-at-container" hidden>
+                <strong>Fecha de Alta:</strong> <span data-card-field="created-at"></span>
+            </p>
+        </article>
+    </template>
+
     <script src="manipular.js"></script>
 </body>
 
