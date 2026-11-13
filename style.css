@@ -179,11 +179,11 @@ header>img[alt*="UNSC recruitment image"] {
     text-align: left;
 }
 
-.api-card__photo {
+.api-card_photo {
     margin-bottom: 0.75rem;
 }
 
-.api-card__image {
+.api-card_image {
     display: block;
     width: 100%;
     max-width: 220px;
@@ -192,13 +192,13 @@ header>img[alt*="UNSC recruitment image"] {
     object-fit: cover;
 }
 
-.api-card__photo-placeholder {
+.api-card_photo-placeholder {
     margin-bottom: 0;
     color: var(--text-muted);
     font-family: monospace;
 }
 
-.api-card__title {
+.api-card_title {
     margin-bottom: 0.5rem;
     color: var(--highlight);
     font-family: monospace;
@@ -206,13 +206,13 @@ header>img[alt*="UNSC recruitment image"] {
     text-transform: uppercase;
 }
 
-.api-card__field {
+.api-card_field {
     color: var(--text-muted);
     font-family: monospace;
     font-size: 1rem;
 }
 
-.api-card__date {
+.api-card_date {
     margin-top: 0.5rem;
     color: var(--text-main);
     font-family: monospace;
