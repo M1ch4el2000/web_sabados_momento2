@@ -1,0 +1,124 @@
+.site-header {
+    max-width: 1000px;
+}
+
+.site-logo {
+    max-height: 110px;
+}
+
+.info-page {
+    width: 100%;
+    max-width: 1000px;
+    margin-bottom: 2rem;
+}
+
+.page-lead,
+.program-history,
+.notable-section {
+    margin-bottom: 1.5rem;
+    padding: clamp(1.25rem, 4vw, 2.5rem);
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+}
+
+.page-lead {
+    border-top: 3px solid var(--highlight);
+}
+
+.eyebrow,
+.program-tag,
+.spartan-class {
+    color: var(--highlight);
+    font-family: monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.eyebrow {
+    margin-bottom: 0.5rem;
+    letter-spacing: 2px;
+}
+
+.info-page h2 {
+    margin-bottom: 0.75rem;
+    color: var(--highlight);
+    font-family: monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.page-lead > p:last-child,
+.program-entry p,
+.spartan-card p {
+    color: var(--text-muted);
+    line-height: 1.75;
+}
+
+.program-list {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+}
+
+.program-entry {
+    display: grid;
+    grid-template-columns: minmax(135px, 175px) 1fr;
+    gap: 1.25rem;
+    padding: 1.25rem;
+    background-color: #111812;
+    border: 1px solid var(--border-color);
+    border-left: 3px solid var(--highlight);
+}
+
+.program-tag {
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.program-entry h3,
+.spartan-card h3 {
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+}
+
+.spartan-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1.25rem;
+}
+
+.spartan-card {
+    padding: 1.25rem;
+    background-color: #111812;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.spartan-class {
+    display: block;
+    margin-bottom: 0.65rem;
+    font-size: 0.75rem;
+}
+
+.lore-note {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+footer img {
+    max-height: 85px;
+}
+
+@media (max-width: 600px) {
+    .program-entry {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .spartan-grid {
+        grid-template-columns: 1fr;
+    }
+}

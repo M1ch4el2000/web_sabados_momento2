@@ -1,0 +1,95 @@
+.site-header {
+    max-width: 1000px;
+}
+
+.site-header #recruit_head1 {
+    margin-bottom: 1rem;
+}
+
+.site-logo {
+    max-height: 110px;
+}
+
+.info-page {
+    width: 100%;
+    max-width: 900px;
+    margin-bottom: 2rem;
+}
+
+.page-lead,
+.history-section {
+    padding: clamp(1.25rem, 4vw, 2.5rem);
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+}
+
+.page-lead {
+    margin-bottom: 1.5rem;
+    border-top: 3px solid var(--highlight);
+}
+
+.eyebrow {
+    margin-bottom: 0.5rem;
+    color: var(--highlight);
+    font-family: monospace;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.info-page h2 {
+    margin-bottom: 0.75rem;
+    color: var(--highlight);
+    font-family: monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.page-lead > p:last-child,
+.timeline-entry p {
+    color: var(--text-muted);
+    line-height: 1.8;
+}
+
+.timeline {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+}
+
+.timeline-entry {
+    display: grid;
+    grid-template-columns: minmax(110px, 150px) 1fr;
+    gap: 1.25rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--border-color);
+}
+
+.timeline-date {
+    color: var(--highlight);
+    font-family: monospace;
+    font-weight: 700;
+}
+
+.timeline-entry h3 {
+    margin-bottom: 0.4rem;
+    color: var(--text-main);
+}
+
+.lore-note {
+    margin-top: 1rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+footer img {
+    max-height: 85px;
+}
+
+@media (max-width: 600px) {
+    .timeline-entry {
+        grid-template-columns: 1fr;
+        gap: 0.35rem;
+    }
+}

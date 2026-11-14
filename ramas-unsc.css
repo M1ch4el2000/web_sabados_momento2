@@ -1,0 +1,117 @@
+.site-header {
+    max-width: 1000px;
+}
+
+.site-logo {
+    max-height: 110px;
+}
+
+.info-page {
+    width: 100%;
+    max-width: 1000px;
+    margin-bottom: 2rem;
+}
+
+.page-lead,
+.branch-group {
+    margin-bottom: 1.5rem;
+    padding: clamp(1.25rem, 4vw, 2.5rem);
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+}
+
+.page-lead {
+    border-top: 3px solid var(--highlight);
+}
+
+.eyebrow {
+    margin-bottom: 0.5rem;
+    color: var(--highlight);
+    font-family: monospace;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.info-page h2 {
+    margin-bottom: 0.75rem;
+    color: var(--highlight);
+    font-family: monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.page-lead > p:last-child,
+.branch-card p {
+    color: var(--text-muted);
+    line-height: 1.75;
+}
+
+.branch-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1.25rem;
+}
+
+.branch-card {
+    position: relative;
+    padding: 1.25rem;
+    background-color: #111812;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.branch-card--featured {
+    border-top: 3px solid var(--highlight);
+}
+
+.branch-number {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: var(--highlight);
+    font-family: monospace;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+}
+
+.branch-card h3 {
+    margin-bottom: 0.6rem;
+    color: var(--text-main);
+    font-family: monospace;
+}
+
+.branch-card .branch-role {
+    margin-top: 0.85rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--highlight);
+    font-size: 0.9rem;
+}
+
+.branch-grid--secondary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.lore-note {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+footer img {
+    max-height: 85px;
+}
+
+@media (max-width: 750px) {
+    .branch-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 520px) {
+    .branch-grid,
+    .branch-grid--secondary {
+        grid-template-columns: 1fr;
+    }
+}

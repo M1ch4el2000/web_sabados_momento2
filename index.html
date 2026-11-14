@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="./inicio.css">
+    <title>UNSC | Inicio</title>
 </head>
 
 <body>
@@ -15,21 +16,32 @@
             <img alt="UNSC_Logo" title="UNSC Logo" src="./UNSC_Logo.png">
         </div>
         <nav>
-            <button>Inicio</button>
-            <button>Sobre la UNSC</button>
-            <button>Ramas UNSC</button>
-            <button>Proyecto Spartan</button>
-            <button onclick="window.location.href='http://localhost:8080/'">Formulario</button>
+            <a href="./index.html" aria-current="page">Inicio</a>
+            <a href="./sobre-unsc.html">Sobre la UNSC</a>
+            <a href="./ramas-unsc.html">Ramas UNSC</a>
+            <a href="./proyecto-spartan.html">Proyecto Spartan</a>
+            <a href="http://localhost:8080/">Formulario</a>
         </nav>
         <img alt="UNSC recruitment image" title="Enlist now!" src="./heroImg.jpg">
     </header>
     <section class="unsc_content">
-        <article class="unsc_content">
-            <p>Bienvenido/a al sistema de reclutamiento de el comando espacial de las naciones unidas UNSC, si tienes
-                interés en prestar servicio contra los enemigos de la humanidad y la paz presiona el botón de "Formulario"</p>
+        <article class="unsc_content home-intro">
+            <p>Bienvenido/a al sistema de reclutamiento del Comando Espacial de las Naciones Unidas (UNSC). Si tienes
+                interés en servir y proteger a la humanidad, conoce nuestras fuerzas y visita el formulario de reclutamiento.</p>
         </article>
+        <section class="mission-vision" aria-label="Visión y misión de la UNSC">
+            <article class="mission-card">
+                <h2>Visión</h2>
+                <p>Una humanidad unida, segura y capaz de prosperar en todos los mundos, protegida frente a las amenazas que ponen en riesgo su futuro.</p>
+            </article>
+            <article class="mission-card">
+                <h2>Misión</h2>
+                <p>Defender a la humanidad y sus colonias, mantener la paz y apoyar a la población mediante fuerzas coordinadas en tierra, mar, aire y espacio.</p>
+            </article>
+        </section>
+        <p class="lore-note">Esta visión y misión son una síntesis informativa inspirada en el universo de Halo; no son lemas oficiales de la UNSC.</p>
         <div id="recent">
-            <p>Reclutas recien registrados/as</p>
+            <p>Reclutas recién registrados/as</p>
         </div>
         <div id="api-cards-container"></div>
         <section class="unsc_content">

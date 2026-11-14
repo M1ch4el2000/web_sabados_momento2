@@ -86,23 +86,32 @@ nav {
 }
 
 .unsc_content button,
-nav button {
+nav a {
+    display: inline-block;
     background-color: var(--bg-card);
     color: var(--text-main);
     border: 1px solid var(--border-color);
     padding: 0.6rem 1.2rem;
     cursor: pointer;
     font-weight: 600;
+    font-family: monospace;
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: all 0.3s ease;
 }
 
 form button:hover,
-nav button:hover {
+nav a:hover,
+nav a[aria-current="page"] {
     background-color: var(--accent-green);
     border-color: var(--highlight);
     box-shadow: 0 0 10px rgba(112, 162, 94, 0.3);
+}
+
+nav a:focus-visible,
+footer a:focus-visible {
+    outline: 2px solid var(--highlight);
+    outline-offset: 3px;
 }
 
 header>img[alt*="UNSC recruitment image"] {
